@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', 'VT323', 'Silkscreen', monospace;
+    background: radial-gradient(ellipse at 30% 40%, #0a0f1a, #010101);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+}
+
+/* ЭЛТ-эффект + линии развертки */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(0deg, rgba(0,255,65,0.03) 0px, rgba(0,255,65,0.03) 2px, transparent 2px, transparent 6px);
+    z-index: 999;
+}
+
+/* Зернистость как на старых мониторах */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjkiIG51bU9jdGF2ZXM9IjMiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMTgiLz48L3N2Zz4=');
+    background-repeat: repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 998;
+}
+
+/* Корпус аркадного автомата */
+.app-container {
+    width: 1300px;
+    max-width: 95%;
+    background: #010a0c;
+    background-image: linear-gradient(145deg, #0b1a1c 0%, #030a0c 100%);
+    border-radius: 40px 40px 30px 30px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.8), inset 0 1px 2px rgba(90,255,90,0.2), 0 0 0 4px #1e3b2a, 0 0 0 8px #0b1e14;
+    border: 1px solid #2bff6e;
+    overflow: hidden;
+}
+
+/* Шапка как табло Pong */
+.retro-header {
+    background: #000000;
+    background: linear-gradient(90deg, #021008, #0a2818, #021008);
+    padding: 1rem 2rem;
+    border-bottom: 3px solid #2eff70;
+    box-shadow: inset 0 1px 0 #4aff80, 0 4px 12px black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    background: #021008;
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 0px;
+    color: #1eff6e;
+    text-shadow: 0 0 5px #00cc44, 2px 2px 0 #004d1a;
+    letter-spacing: 2px;
+    border: 1px solid #2eff6e;
+    box-shadow: 4px 4px 0 #0e4d25;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 18px;
+}
+
+/* Кнопки-переключатели в стиле аркад */
+.retro-btn {
+    background: #181f1a;
+    border: none;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 8px 20px;
+    border-radius: 0px;
+    color: #90ffb0;
+    text-shadow: 0 1px 0 #003316;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #04200e, inset 0 1px 0 #44cc77;
+    transition: 0.05s linear;
+    letter-spacing: 1px;
+    border-left: 2px solid #2eff6e;
+    border-right: 1px solid #145a2e;
+}
+
+.retro-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #04200e;
+}
+
+.retro-btn.active {
+    background: #0e5a32;
+    color: #d0ffcc;
+    box-shadow: 0 3px 0 #0a3d21;
+    transform: translateY(2px);
+    border-left: 2px solid #c6ff8c;
+}
+
+.content-panel {
+    padding: 2rem 2rem 2.5rem;
+    min-height: 550px;
+    background: #030f0c;
+    background-image: radial-gradient(circle at 15% 30%, rgba(40,255,100,0.05) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+/* Сетка карточек */
+.tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+    margin-top: 15px;
+}
+
+/* Карточка репетитора в пиксельном стиле */
+.tutor-card {
+    background: #021008;
+    border: 2px solid #2eff6e;
+    border-radius: 12px;
+    padding: 18px 15px 20px;
+    box-shadow: 5px 5px 0 #0d4a28;
+}
+
+.tutor-card h3 {
+    font-size: 1.5rem;
+    font-family: monospace;
+    background: linear-gradient(135deg, #b3ffb0, #3eff7a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 6px #1eff6e;
+}
+
+.subject-badge {
+    display: inline-block;
+    background: #0d261a;
+    padding: 4px 12px;
+    border-left: 4px solid #2eff6e;
+    font-weight: bold;
+    color: #b6ffc6;
+    font-size: 0.8rem;
+    margin: 8px 0;
+    font-family: monospace;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #b2ffb0;
+    margin: 8px 0;
+    text-shadow: 0 0 2px #00cc44;
+}
+
+.hire-btn {
+    background: #161f19;
+    border: 1px solid #24d46a;
+    padding: 8px 0;
+    width: 100%;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 0px;
+    color: #c7ffb8;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #0e4224;
+    transition: 0.05s linear;
+}
+
+.hire-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #0e4224;
+}
+
+/* Формы входа/регистрации */
+.auth-card {
+    max-width: 440px;
+    margin: 0 auto;
+    background: #020d07;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 2px solid #34ff6e;
+    box-shadow: 8px 8px 0 #0f552e;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 12px 0;
+    background: #031006;
+    border: 2px solid #1cac4a;
+    font-family: monospace;
+    font-size: 1rem;
+    border-radius: 0px;
+    outline: none;
+    color: #a6ffb3;
+}
+
+.auth-card input:focus {
+    border-color: #6eff9a;
+    box-shadow: 0 0 6px #2eff6e;
+}
+
+.switch-text {
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+    color: #5eff8a;
+    text-decoration: underline;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* Профиль */
+.profile-card {
+    background: #021008;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border-left: 10px solid #2eff6e;
+    box-shadow: 6px 8px 0 #0a552a;
+    color: #bbffcc;
+}
+
+.info-line {
+    font-size: 1.2rem;
+    margin: 12px 0;
+    border-bottom: 2px dotted #2b874b;
+    padding: 6px;
+    font-family: monospace;
+}
+
+.booking-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.booking-list li {
+    background: #0a1f14;
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #3aff74;
+}
+
+.empty-bookings {
+    color: #6faa7a;
+    font-style: italic;
+}
+
+footer {
+    background: #010a04;
+    color: #47ff7c;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.7rem;
+    border-top: 2px solid #2eff6e;
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+/* Уведомления */
+.toast-msg {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #041008;
+    color: #bcffb0;
+    padding: 10px 24px;
+    border-radius: 0px;
+    font-family: monospace;
+    font-weight: bold;
+    border-left: 8px solid #2eff6e;
+    box-shadow: 4px 6px 0 #154d26;
+    z-index: 2000;
+    animation: fadeToast 2.5s forwards;
+}
+
+@keyframes fadeToast {
+    0% { opacity: 0; bottom: 0; }
+    15% { opacity: 1; bottom: 25px; }
+    85% { opacity: 1; bottom: 25px; }
+    100% { opacity: 0; bottom: -30px; visibility: hidden; }
+}

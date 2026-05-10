@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeachLink | Вход</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="retro-header">
+            <div class="logo">TeachLink</div>
+            <div class="nav-buttons">
+                <button class="retro-btn active" id="showLoginBtn">ВХОД</button>
+                <button class="retro-btn" id="showRegisterBtn">РЕГИСТРАЦИЯ</button>
+            </div>
+        </div>
+        
+        <div class="content-panel" id="contentPanel">
+            <!-- Форма входа (видна по умолчанию) -->
+            <div id="loginForm" class="auth-card">
+                <h2 style="text-align:center; margin-bottom:1rem;"></h2>
+                <input type="text" id="loginUsername" placeholder="Имя пользователя" autocomplete="off">
+                <input type="password" id="loginPassword" placeholder="Пароль">
+                <button class="retro-btn" id="doLoginBtn" style="width:100%">Войти в учение</button>
+                <div class="switch-text" id="switchToRegister">Нет аккаунта? Создать ✨</div>
+            </div>
+
+            <!-- Форма регистрации (скрыта) -->
+            <div id="registerForm" class="auth-card" style="display:none;">
+                <h2 style="text-align:center; margin-bottom:1rem;">РЕГИСТРАЦИЯ</h2>
+                <input type="text" id="regUsername" placeholder="Имя пользователя" autocomplete="off">
+                <input type="password" id="regPassword" placeholder="Пароль">
+                <input type="password" id="regConfirm" placeholder="Подтвердите пароль">
+                <button class="retro-btn" id="doRegisterBtn" style="width:100%">Записаться на учение</button>
+                <div class="switch-text" id="switchToLogin">Уже есть аккаунт? Войти</div>
+            </div>
+        </div>
+        
+        <footer>ВСЕ НАСТАВНИКИ ПРОВЕРЕНЫ ВРЕМЕНЕМ</footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
